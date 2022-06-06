@@ -1,5 +1,6 @@
 <?php
-    session_start();
+session_start();
+require __DIR__ . '/../vendor/autoload.php';
 
 ?>
 <!doctype html>
@@ -24,24 +25,52 @@
 
 
     <div class="tab">
-        <p><input class="isValid" name="data[name]" placeholder="First name..."
-                  oninput="this.className = onInput(this.className)" required></p>
-        <p><input class="isValid" name="data[surname]" placeholder="Last name..." required></p>
-        <p><input class="isValid" name="data[birthdate]" placeholder="Birthdate..." type="date" required></p>
-        <p><input class="isValid" name="data[subject]" placeholder="Repost subject..." required></p>
-        <p>Country: <select class="country isValid" name="data[country]" required>
-                <option>Choose Country</option>
-            </select></p>
-        <p><input class="isValid" name="data[phone]" placeholder="Phone..." required type="tel"></p>
-        <p><input class="isValid" name="data[email]" placeholder="E-mail..." required type="email"></p>
+        <p><label>First name:
+                <input class="isValid" name="data[first name]" placeholder="First name..."
+                       oninput="this.className = onInput(this.className)" required>
+            </label></p>
+        <p><label>Last name:
+                <input class="isValid" name="data[last name]" placeholder="Last name..."
+                       oninput="this.className = onInput(this.className)" required>
+            </label></p>
+        <p><label>Birth date:
+                <input class="isValid" name="data[birthdate]" placeholder="Birthdate..."
+                       oninput="this.className = onInput(this.className)" type="date" required>
+            </label></p>
+        <p><label>Report subject:
+                <input class="isValid" name="data[subject]" placeholder="Repost subject..."
+                       oninput="this.className = onInput(this.className)" required>
+            </label></p>
+        <p><label>Country:
+                <select class="country isValid" name="data[country]" required>
+                        <option>Choose Country</option>
+                    </select>
+            </label></p>
+        <p><label>Phone:
+                <input class="isValid" name="data[phone]" placeholder="Phone..."
+                       oninput="this.className = onInput(this.className)" required type="tel">
+            </label></p>
+        <p><label>Email:
+                <input class="isValid" name="data[email]" placeholder="E-mail..."
+                       oninput="this.className = onInput(this.className)" required type="email">
+            </label></p>
     </div>
 
 
-    <div class="tab">Login Info:
-        <p><input name="data[company]" placeholder="Company..."></p>
-        <p><input name="data[position]" placeholder="Position..."></p>
-        <p><textarea name="data[about]" placeholder="About me..."></textarea></p>
-        <p><input name="data[photo]" placeholder="Photo..." type="file"></p>
+    <div class="tab">
+        <h3>Additional info:</h3>
+        <p><label>Company:
+                <input name="data[company]" placeholder="Company...">
+            </label></p>
+        <p><label>Position:
+                <input name="data[position]" placeholder="Position...">
+            </label></p>
+        <p><label>About me:
+                <textarea name="data[about]" placeholder="About me..."></textarea>
+            </label></p>
+        <p><label>My Photo:
+                <input name="data[photo]" placeholder="Photo..." type="file">
+            </label></p>
     </div>
 
     <div class="tab">
@@ -58,43 +87,25 @@
     <div style="text-align:center;margin-top:40px;">
         <span class="step"></span>
         <span class="step"></span>
-        <div id="my_message"></div>
-        <a></a>
     </div>
 </form>
+
+<div class="members-link">
+    <a href="members.php">All members</a>
+</div>
 
 <script>
 
     let currentTab = 0;
-    if(sessionStorage.getItem('currentTab')){
+    if (sessionStorage.getItem('currentTab')) {
         currentTab = +sessionStorage.getItem('currentTab');
-    } else if(+sessionStorage.getItem('currentTab') === 2){
+    } else if (+sessionStorage.getItem('currentTab') === 2) {
         currentTab = 0;
     }
     console.log(currentTab, sessionStorage.getItem('currentTab'));
     sessionStorage.setItem('currentTab', '0');
+
     showTab(currentTab);
-
-    function showTab(n) {
-
-        const x = document.getElementsByClassName("tab");
-        x[n].style.display = "block";
-
-        if (n === 0) {
-            document.getElementById("nextBtn").style.display = "inline";
-        } else {
-            document.getElementById("nextBtn").style.display = "inline";
-        }
-        if (n === (x.length - 1)) {
-            document.getElementById("nextBtn").style.display = "none";
-        }
-        fixStepIndicator(n)
-    }
-
-    function onInput(str) {
-        let subst = /invalid/g;
-        return str.replace(subst, '');
-    }
 
     function sendData() {
         $.post(
@@ -106,62 +117,7 @@
         );
     }
 
-    function nextPrev(n) {
-
-        let x = document.getElementsByClassName("tab");
-
-        if (n === 1 && !validateForm()) {
-            return false
-        }
-
-        x[currentTab].style.display = "none";
-        currentTab = currentTab + n;
-        sessionStorage.setItem('currentTab', currentTab.toString());
-        if(+sessionStorage.getItem('currentTab') === 2){
-            sessionStorage.setItem('currentTab', '0');
-        }
-        console.log(currentTab, sessionStorage.getItem('currentTab'))
-        showTab(currentTab);
-        sendData();
-    }
-
-    function validateForm() {
-
-        let x, y, i, valid = true;
-        x = document.getElementsByClassName("tab");
-        y = x[currentTab].getElementsByClassName("isValid");
-
-
-        for (i = 0; i < y.length; i++) {
-
-            if (y[i].value === "") {
-                y[i].className += " invalid";
-                valid = false;
-            }
-        }
-
-
-        if (valid) {
-            document.getElementsByClassName("step")[currentTab].className += " finish";
-        }
-        if (currentTab === 2) {
-            document.getElementsByClassName("step").style.display = 'none';
-        }
-        return valid;
-    }
-
-    function fixStepIndicator(n) {
-
-        let i, x = document.getElementsByClassName("step");
-        for (i = 0; i < x.length; i++) {
-            x[i].className = x[i].className.replace(" active", "");
-        }
-
-        x[n].className += " active";
-    }
-
     const countryList = document.querySelector('.country');
-
     fetch('https://restcountries.com/v3.1/all').then(res => {
         return res.json();
     }).then(data => {

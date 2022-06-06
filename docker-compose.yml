@@ -17,6 +17,7 @@ services:
       - "42022:22"
     volumes:
       - ./source-file:/var/www/html
+      - ./:/var/www
     depends_on:
       - mysql
   mysql:
@@ -25,7 +26,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: Invite
+      MYSQL_DATABASE: MemberList
     volumes:
       - ./mysql:/var/lib/mysql
 
