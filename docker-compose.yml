@@ -1,0 +1,31 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:1.21.4
+    ports:
+      - "8080:80"
+    depends_on:
+      - php8
+    volumes:
+      - ./config:/etc/nginx/conf.d
+      - ./source-file:/var/www/html
+  php8:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "42022:22"
+    volumes:
+      - ./source-file:/var/www/html
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: Invite
+    volumes:
+      - ./mysql:/var/lib/mysql
+
