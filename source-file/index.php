@@ -1,3 +1,7 @@
+<?php
+    session_start();
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -60,7 +64,15 @@
 </form>
 
 <script>
+
     let currentTab = 0;
+    if(sessionStorage.getItem('currentTab')){
+        currentTab = +sessionStorage.getItem('currentTab');
+    } else if(+sessionStorage.getItem('currentTab') === 2){
+        currentTab = 0;
+    }
+    console.log(currentTab, sessionStorage.getItem('currentTab'));
+    sessionStorage.setItem('currentTab', '0');
     showTab(currentTab);
 
     function showTab(n) {
@@ -104,6 +116,11 @@
 
         x[currentTab].style.display = "none";
         currentTab = currentTab + n;
+        sessionStorage.setItem('currentTab', currentTab.toString());
+        if(+sessionStorage.getItem('currentTab') === 2){
+            sessionStorage.setItem('currentTab', '0');
+        }
+        console.log(currentTab, sessionStorage.getItem('currentTab'))
         showTab(currentTab);
         sendData();
     }
