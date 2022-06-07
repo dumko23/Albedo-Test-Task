@@ -3,11 +3,9 @@ namespace App;
 require __DIR__ . '/../vendor/autoload.php';
 
 PDOAdapter::db();
-//PDOAdapter::insertToDB('sds', 'sdsd', 12223,'sdsd', 'dsds', 'sdsd', 'sdsd');
+
 $list = PDOAdapter::getFromDB();
-echo '<pre>';
-print_r($list[0]);
-echo '</pre>';
+
 
 ?>
 <!doctype html>

@@ -69,10 +69,11 @@ require __DIR__ . '/../vendor/autoload.php';
         <p><label>About me:
                 <textarea name="data[about]" placeholder="About me..."></textarea>
             </label></p>
-        <input type="hidden" name="MAX_FILE_SIZE" value="300000000" />
+        <input type="hidden" name="MAX_FILE_SIZE" value="3000000000" />
         <p><label>My Photo (.png, .jpg, .jpeg):
                 <input id="imgLoad" name="photo" type="file" accept=".png, .jpg, .jpeg">
             </label></p>
+        <p id="fileWarning"></p>
     </div>
 
     <div class="tab">
@@ -116,13 +117,7 @@ require __DIR__ . '/../vendor/autoload.php';
         let formData = new FormData(oldForm);
         let file_data = $('#imgLoad').prop('files')[0];
         formData.append("photo", file_data);
-        // $.post(
-        //     'handlerSend.php',
-        //     formData,
-        //     function (msg) {
-        //         $('#my_message').html(msg);
-        //     }
-        // );
+
         $.ajax({
             type:"POST",
             processData: false,
@@ -131,23 +126,17 @@ require __DIR__ . '/../vendor/autoload.php';
             url:'handlerSend.php',
             data:formData,
             success:function (data) {
-                console.log(data);
+                console.log(data, 1);
             }
         });
     }
 
     function updateData() {
-        // $.post(
-        //     'handlerUpdate.php',
-        //     $("#regForm").serialize(),
-        //     function (msg) {
-        //         $('#my_message').html(msg);
-        //     }
-        // );
         let oldForm = document.forms.form;
         let formData = new FormData(oldForm);
         let file_data = $('#imgLoad').prop('files')[0];
         formData.append("photo", file_data);
+
         $.ajax({
             type:"POST",
             processData: false,

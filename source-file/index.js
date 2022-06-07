@@ -28,12 +28,19 @@ function nextPrev(n) {
     if (n === 1 && !validateForm()) {
         return false
     }
-
-    x[currentTab].style.display = "none";
     if (currentTab === 0) {
         sendData();
+        x[currentTab].style.display = "none";
     } else if (currentTab === 1) {
-        updateData();
+        let file_data = document.getElementById("imgLoad").files[0];
+        if (file_data.size > 3000000000){
+            document.getElementById('fileWarning').innerHTML = `Max file size is 300. Your is ${file_data.size}`
+            return false;
+        } else {
+
+            updateData();
+            x[currentTab].style.display = "none";
+        }
     }
     currentTab = currentTab + n;
     sessionStorage.setItem('currentTab', currentTab.toString());
