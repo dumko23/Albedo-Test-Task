@@ -21,7 +21,7 @@ require __DIR__ . '/../vendor/autoload.php';
         width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"></iframe>
 
-<form id="regForm" onsubmit="return false">
+<form id="regForm" name="form" enctype="multipart/form-data" onsubmit="return false" method="post">
     <h1>Register:</h1>
 
 
@@ -69,13 +69,15 @@ require __DIR__ . '/../vendor/autoload.php';
         <p><label>About me:
                 <textarea name="data[about]" placeholder="About me..."></textarea>
             </label></p>
-        <p><label>My Photo:
-                <input name="data[photo]" placeholder="Photo..." type="file" accept=".png, .jpg, .jpeg">
+        <input type="hidden" name="MAX_FILE_SIZE" value="300000000" />
+        <p><label>My Photo (.png, .jpg, .jpeg):
+                <input id="imgLoad" name="photo" type="file" accept=".png, .jpg, .jpeg">
             </label></p>
     </div>
 
     <div class="tab">
         <p>some links</p>
+        <a href="/">Back to 1st step</a>
     </div>
 
     <div style="overflow:auto;">
@@ -110,23 +112,53 @@ require __DIR__ . '/../vendor/autoload.php';
     showTab(currentTab);
 
     function sendData() {
-        $.post(
-            'handlerSend.php',
-            $("#regForm").serialize(),
-            function (msg) {
-                $('#my_message').html(msg);
+        let oldForm = document.forms.form;
+        let formData = new FormData(oldForm);
+        let file_data = $('#imgLoad').prop('files')[0];
+        formData.append("photo", file_data);
+        // $.post(
+        //     'handlerSend.php',
+        //     formData,
+        //     function (msg) {
+        //         $('#my_message').html(msg);
+        //     }
+        // );
+        $.ajax({
+            type:"POST",
+            processData: false,
+            contentType: false,
+            cache: false,
+            url:'handlerSend.php',
+            data:formData,
+            success:function (data) {
+                console.log(data);
             }
-        );
+        });
     }
 
     function updateData() {
-        $.post(
-            'handlerUpdate.php',
-            $("#regForm").serialize(),
-            function (msg) {
-                $('#my_message').html(msg);
+        // $.post(
+        //     'handlerUpdate.php',
+        //     $("#regForm").serialize(),
+        //     function (msg) {
+        //         $('#my_message').html(msg);
+        //     }
+        // );
+        let oldForm = document.forms.form;
+        let formData = new FormData(oldForm);
+        let file_data = $('#imgLoad').prop('files')[0];
+        formData.append("photo", file_data);
+        $.ajax({
+            type:"POST",
+            processData: false,
+            contentType: false,
+            cache: false,
+            url:'handlerUpdate.php',
+            data:formData,
+            success:function (data) {
+                console.log(data);
             }
-        );
+        });
     }
 
 

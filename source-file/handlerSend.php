@@ -3,15 +3,16 @@
 namespace App;
 require __DIR__ . '/../vendor/autoload.php';
 
-echo $_POST['data']['firstName'];
+$data = $_POST['data'];
 
 print_r($_POST);
+print_r($_FILES);
 
-PDOAdapter::db();
-PDOAdapter::insertToDB($_POST['data']['firstName'],
-    $_POST['data']['lastName'],
-    $_POST['data']['date'],
-    $_POST['data']['subject'],
-    $_POST['data']['country'],
-    $_POST['data']['phone'],
-    $_POST['data']['email']);
+
+PDOAdapter::insertToDB($data['firstName'],
+    $data['lastName'],
+    $data['date'],
+    $data['subject'],
+    $data['country'],
+    $data['phone'],
+    $data['email']);

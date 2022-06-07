@@ -6,8 +6,9 @@ PDOAdapter::db();
 //PDOAdapter::insertToDB('sds', 'sdsd', 12223,'sdsd', 'dsds', 'sdsd', 'sdsd');
 $list = PDOAdapter::getFromDB();
 echo '<pre>';
-print_r($list);
+print_r($list[0]);
 echo '</pre>';
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -24,6 +25,9 @@ echo '</pre>';
 <div class="memberList">
     <?php
     foreach ($list as $member) {
+        if($member['photo'] === ''){
+            $member['photo'] = 'default-image.png';
+        }
         echo "<table class='member-table'>
                 <tr>
                     <td class='descr'>Photo</td>

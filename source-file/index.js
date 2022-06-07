@@ -30,9 +30,9 @@ function nextPrev(n) {
     }
 
     x[currentTab].style.display = "none";
-    if(currentTab === 0){
+    if (currentTab === 0) {
         sendData();
-    } else if(currentTab === 1){
+    } else if (currentTab === 1) {
         updateData();
     }
     currentTab = currentTab + n;

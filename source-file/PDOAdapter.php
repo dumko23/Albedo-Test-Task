@@ -56,9 +56,16 @@ class PDOAdapter
         return "delete from MemberList.Members";
     }
 
-    public static function update()
+    public static function searchMember($email): bool|array
     {
+         $querySearch = "select  memberId from MemberList.Members where email = '$email';";
+        return static::db()->query($querySearch)->fetchAll();
+    }
 
+    public static function update($memberId, $company, $position, $about, $photo): void
+    {
+        PDOAdapter::db()->prepare("update MemberList.Members set company = ?, position = ?, about = ?, photo = ?   where memberId = ?")
+            ->execute([$company, $position, $about, $photo, $memberId]);
     }
 
 
