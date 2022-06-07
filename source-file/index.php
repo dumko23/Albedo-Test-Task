@@ -48,7 +48,7 @@ require __DIR__ . '/../vendor/autoload.php';
                     </select>
             </label></p>
         <p><label>Phone:
-                <input class="isValid" name="data[phone]" placeholder="Phone..."
+                <input class="isValid" name="data[phone]" placeholder="+1 (555) 555-5555" maxlength="17"
                        oninput="this.className = onInput(this.className)" required type="tel">
             </label></p>
         <p><label>Email:

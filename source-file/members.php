@@ -41,7 +41,7 @@ $list = PDOAdapter::getFromDB();
                 </tr>
                 <tr>
                     <td class='descr'>Email</td>
-                    <td>{$member['email']}</td>
+                    <td><a href='mailto:{$member['email']}'>{$member['email']}</a></td>
                 </tr>
             </table>
             ";
