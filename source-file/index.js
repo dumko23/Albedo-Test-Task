@@ -30,6 +30,11 @@ function nextPrev(n) {
     }
 
     x[currentTab].style.display = "none";
+    if(currentTab === 0){
+        sendData();
+    } else if(currentTab === 1){
+        updateData();
+    }
     currentTab = currentTab + n;
     sessionStorage.setItem('currentTab', currentTab.toString());
     if (+sessionStorage.getItem('currentTab') === 2) {
@@ -37,7 +42,6 @@ function nextPrev(n) {
     }
     console.log(currentTab, sessionStorage.getItem('currentTab'))
     showTab(currentTab);
-    sendData();
 }
 
 function validateForm() {
@@ -70,5 +74,6 @@ function fixStepIndicator(n) {
     for (i = 0; i < x.length; i++) {
         x[i].className = x[i].className.replace(" active", "");
     }
+    console.log(x[n].className);
     x[n].className += " active";
 }

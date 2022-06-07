@@ -1,6 +1,7 @@
 <?php
-session_start();
+
 require __DIR__ . '/../vendor/autoload.php';
+
 
 ?>
 <!doctype html>
@@ -26,15 +27,15 @@ require __DIR__ . '/../vendor/autoload.php';
 
     <div class="tab">
         <p><label>First name:
-                <input class="isValid" name="data[first name]" placeholder="First name..."
+                <input class="isValid" name="data[firstName]" placeholder="First name..."
                        oninput="this.className = onInput(this.className)" required>
             </label></p>
         <p><label>Last name:
-                <input class="isValid" name="data[last name]" placeholder="Last name..."
+                <input class="isValid" name="data[lastName]" placeholder="Last name..."
                        oninput="this.className = onInput(this.className)" required>
             </label></p>
         <p><label>Birth date:
-                <input class="isValid" name="data[birthdate]" placeholder="Birthdate..."
+                <input class="isValid" name="data[date]" placeholder="Birthdate..."
                        oninput="this.className = onInput(this.className)" type="date" required>
             </label></p>
         <p><label>Report subject:
@@ -69,7 +70,7 @@ require __DIR__ . '/../vendor/autoload.php';
                 <textarea name="data[about]" placeholder="About me..."></textarea>
             </label></p>
         <p><label>My Photo:
-                <input name="data[photo]" placeholder="Photo..." type="file">
+                <input name="data[photo]" placeholder="Photo..." type="file" accept=".png, .jpg, .jpeg">
             </label></p>
     </div>
 
@@ -85,6 +86,7 @@ require __DIR__ . '/../vendor/autoload.php';
     </div>
 
     <div style="text-align:center;margin-top:40px;">
+        <span class="step"></span>
         <span class="step"></span>
         <span class="step"></span>
     </div>
@@ -109,13 +111,24 @@ require __DIR__ . '/../vendor/autoload.php';
 
     function sendData() {
         $.post(
-            'handler.php',
+            'handlerSend.php',
             $("#regForm").serialize(),
             function (msg) {
                 $('#my_message').html(msg);
             }
         );
     }
+
+    function updateData() {
+        $.post(
+            'handlerUpdate.php',
+            $("#regForm").serialize(),
+            function (msg) {
+                $('#my_message').html(msg);
+            }
+        );
+    }
+
 
     const countryList = document.querySelector('.country');
     fetch('https://restcountries.com/v3.1/all').then(res => {

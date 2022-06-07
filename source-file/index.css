@@ -45,7 +45,7 @@ input.invalid {
 }
 
 .members-link{
-    margin: 20px auto;
+    margin: 10px auto;
     padding: 10px;
     width: 70%;
     text-align: center;
@@ -56,4 +56,39 @@ a{
     color: black;
     padding: 0.5rem 1rem;
     background-color: #04AA6D;
+    margin-bottom: 2rem;
+}
+
+.memberList{
+    margin-top: 2rem;
+}
+
+.member-table{
+    border: 1px solid black;
+    margin: 5px auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid rgb(200,200,200);
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+}
+
+td, th {
+    border: 1px solid rgb(190,190,190);
+    padding: 10px 20px;
+}
+
+th {
+    background-color: rgb(235,235,235);
+}
+
+td {
+    text-align: center;
+}
+
+.descr{
+    width: 25%;
 }

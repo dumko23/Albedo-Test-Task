@@ -38,22 +38,27 @@ class PDOAdapter
         return self::$db;
     }
 
-    public static function insertToDB(string $firstName, string $lastName, int $date, string $subject, string $country, string $phone, string $email): void
+    public static function insertToDB(string $firstName, string $lastName, string $date, string $subject, string $country, string $phone, string $email): void
     {
         static::db()->prepare('insert into MemberList.Members 
     (firstName, lastName, date, subject, country, phone, email)
-                                values (?, ?, ?, ?, ?, ?, ?)')->execute([$firstName, $lastName, $date, $subject, $country, $phone, $email]);
+                                values (?, ?, ?, ?, ?, ?, ?)')->execute([$firstName, $lastName, $date, $subject, $country, serialize($phone), $email]);
     }
 
     public static function getFromDB(): bool|array
     {
-        $queryGet = 'select photo, firstName, lastName, email from MemberList.Members;';
+        $queryGet = 'select photo, firstName, lastName, email, subject from MemberList.Members;';
         return static::db()->query($queryGet)->fetchAll();
     }
 
     public static function deleteFromDB(): string
     {
         return "delete from MemberList.Members";
+    }
+
+    public static function update()
+    {
+
     }
 
 
