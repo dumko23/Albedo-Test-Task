@@ -7,21 +7,19 @@ function showTab(n) {
 
     if (n === 0) {
         document.getElementById("nextBtn").style.display = "inline";
-    } else {
-        document.getElementById("nextBtn").style.display = "inline";
+        document.getElementById("step2Btn").style.display = "none";
+    } else if(n === 1) {
+        document.getElementById("nextBtn").style.display = "none";
+        document.getElementById("step2Btn").style.display = "inline";
     }
     if (n === (x.length - 1)) {
-        document.getElementById("nextBtn").style.display = "none";
+        document.getElementById("step2Btn").style.display = "none";
     }
     fixStepIndicator(n)
 }
 
-function onInput(str) {
-    let subst = /invalid/g;
-    return str.replace(subst, '');
-}
 
-async function nextPrev(n, result) {
+async function nextPrev(n, result = true) {
 
     let x = document.getElementsByClassName("tab");
 
@@ -47,43 +45,19 @@ async function nextPrev(n, result) {
                 return false;
             }
         } else {
-
             updateData();
             x[currentTab].style.display = "none";
         }
     }
-    currentTab = currentTab + n;
+    console.log('this', currentTab)
+    currentTab = currentTab + 1;
     sessionStorage.setItem('currentTab', currentTab.toString());
     if (+sessionStorage.getItem('currentTab') === 2) {
         sessionStorage.setItem('currentTab', '0');
     }
-    console.log(currentTab, sessionStorage.getItem('currentTab'))
+    console.log('that', currentTab, sessionStorage.getItem('currentTab'))
     showTab(currentTab);
 }
-
-// function validateForm() {
-//
-//     let x, y, i, valid = true;
-//     x = document.getElementsByClassName("tab");
-//     y = x[currentTab].getElementsByClassName("isValid");
-//
-//
-//     for (i = 0; i < y.length; i++) {
-//
-//         if (y[i].value === "") {
-//             y[i].className += " invalid";
-//             valid = false;
-//         }
-//     }
-//
-//     if (valid) {
-//         document.getElementsByClassName("step")[currentTab].className += " finish";
-//     }
-//     if (currentTab === 2) {
-//         document.getElementsByClassName("step").style.display = 'none';
-//     }
-//     return valid;
-// }
 
 function fixStepIndicator(n) {
 

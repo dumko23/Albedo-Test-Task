@@ -16,25 +16,25 @@ include('view/layouts/header.php')
     <div class="tab">
         <p><label>First name:
                 <input id="firstNameIsValid" name="data[firstName]" placeholder="First name..."
-                       oninput="this.className = onInput(this.className)" required>
+                        required>
             </label>
             <span class="error" id="firstNameError"></span>
         </p>
         <p><label>Last name:
                 <input id="lastNameIsValid" name="data[lastName]" placeholder="Last name..."
-                       oninput="this.className = onInput(this.className)" required>
+                        required>
             </label>
             <span class="error" id="lastNameError"></span>
         </p>
         <p><label>Birth date:
                 <input id="dateIsValid" name="data[date]" placeholder="Birthdate..."
-                       oninput="this.className = onInput(this.className)" type="date" required>
+                       type="date" required>
             </label>
             <span class="error" id="dateError"></span>
         </p>
         <p><label>Report subject:
                 <input id="subjectIsValid" name="data[subject]" placeholder="Repost subject..."
-                       oninput="this.className = onInput(this.className)" required>
+                        required>
             </label>
             <span class="error" id="subjectError"></span>
         </p>
@@ -47,13 +47,13 @@ include('view/layouts/header.php')
         </p>
         <p><label>Phone:
                 <input id="phoneIsValid" name="data[phone]" placeholder="+1 (555) 555-5555" maxlength="17"
-                       oninput="this.className = onInput(this.className)" required type="tel">
+                        required type="tel">
             </label>
             <span class="error" id="phoneError"></span>
         </p>
         <p><label>Email:
                 <input id="emailIsValid" name="data[email]" placeholder="E-mail..."
-                       oninput="this.className = onInput(this.className)" required type="email">
+                        required type="email">
             </label>
             <span class="error" id="emailError"></span>
         </p>
@@ -85,8 +85,8 @@ include('view/layouts/header.php')
 
     <div style="overflow:auto;">
         <div style="float:right;">
-            <button type="button" id="nextBtn" onclick="sendData(1)">Next</button>
-
+            <button type="button" id="nextBtn" onclick="sendData(currentTab)">Next</button>
+            <button type="button" id="step2Btn" onclick="nextPrev(currentTab)">Finish</button>
         </div>
     </div>
 
@@ -134,6 +134,14 @@ include('view/layouts/header.php')
 
     showTab(currentTab);
 
+    function useMethod(n){
+        if(n === 0){
+            sendData(n)
+        }else {
+            updateData(n)
+        }
+    }
+
     function sendData(n) {
         let oldForm = document.forms.form;
         let formData = new FormData(oldForm);
@@ -152,7 +160,6 @@ include('view/layouts/header.php')
             success: function (data) {
                 if (typeof data === 'string') {
                     result = JSON.parse(data);
-                    console.log(1, result);
                     toggleErrors(noErrors);
                     // toggleErrors(result);
                     nextPrev(n, result);
@@ -169,14 +176,14 @@ include('view/layouts/header.php')
     }
 
     function toggleErrors(data) {
-        console.log(2, data)
+
         for (let prop in data){
             if (!!data[prop]) {
-                console.log('shit', prop)
+
                 $(`#${prop}IsValid`).addClass('invalid');
                 $(`#${prop}Error`).html(data[prop])
             } else if(data[prop] === ''){
-                console.log(3)
+
                 $(`#${prop}IsValid`).removeClass('invalid');
                 $(`#${prop}Error`).html(data[prop])
             }
@@ -184,7 +191,7 @@ include('view/layouts/header.php')
     }
 
 
-    function updateData() {
+    function updateData(n) {
         let oldForm = document.forms.form;
         let formData = new FormData(oldForm);
         let file_data = $('#imgLoad').prop('files')[0];
@@ -198,7 +205,7 @@ include('view/layouts/header.php')
             url: 'handlerUpdate.php',
             data: formData,
             success: function (data) {
-                console.log(data);
+
             }
         });
     }

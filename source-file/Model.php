@@ -111,7 +111,7 @@ class Model extends PDOAdapter
 
     }
 
-    protected function insertMemberToDB(string $firstName, string $lastName, string $date, string $subject, string $country, string $phone, string $email): void
+    protected function insertMemberToDB(string $firstName, string $lastName, string $date, string $subject, string $country, string $phone, string $email)
     {
         $this->connection()->prepare('insert into MemberList.Members 
     (firstName, lastName, date, subject, country, phone, email)
