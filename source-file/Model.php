@@ -27,7 +27,7 @@ class Model extends PDOAdapter
         if ($record['phone'] === '') {
             $errors['phone'] = 'Input is empty!';
         } else {
-            $rowInput = $record['phone'];
+
             $number = preg_replace('/\D/', '', $record['phone']);
             if (strlen($number) === 11) {
                 $number = str_split($number);
@@ -42,7 +42,7 @@ class Model extends PDOAdapter
             if (preg_match('/\+\d \(\d{3}\) \d{3}-\d{4}/i', $number)) {
                 $record['phone'] = $record;
             } else {
-                $errors['phone'] = "Incorrect phone number format! Got: " . $rowInput . " Formated to : " . $number;
+                $errors['phone'] = "Incorrect phone number format! Got: " . $number;
             }
         }
 
@@ -87,6 +87,28 @@ class Model extends PDOAdapter
             return $validateResult;
         }
         return true;
+    }
+
+    public function updateMemberRecord($data, $uploadFile, $basename){
+        $searchedId = $this->searchMember($data['email'])['memberId'];
+        if ($searchedId) {
+            if (!$data['company']) {
+                $data['company'] = '';
+            }
+            if (!$data['position']) {
+                $data['position'] = '';
+            }
+            if (!$data['about']) {
+                $data['about'] = '';
+            }
+            if (!$basename) {
+                $uploadFile = '';
+            }
+            $this->update($searchedId, $data['company'], $data['position'], $data['about'], $uploadFile);
+            return true;
+        }
+        return $searchedId;
+
     }
 
     protected function insertMemberToDB(string $firstName, string $lastName, string $date, string $subject, string $country, string $phone, string $email): void

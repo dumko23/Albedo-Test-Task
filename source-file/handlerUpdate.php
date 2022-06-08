@@ -11,7 +11,11 @@ $data = $_POST['data'];
 
 $uploadDir = './uploads/';
 
-$uploadFile = $uploadDir . basename($_FILES['photo']['name']);
+$basename = basename($_FILES['photo']['name']);
+
+$uploadFile = $uploadDir . $basename;
+
+$updater = new Controller();
 
 echo '<pre>';
 if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadFile)) {
@@ -21,21 +25,23 @@ if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadFile)) {
 }
 echo '</pre>';
 
-$searchedId = PDOAdapter::searchMember($data['email'])[0]['memberId'];
+$updater->updateAdditionalInfo($data, $uploadFile, $basename);
 
-if ($searchedId) {
-    if (!$data['company']) {
-        $data['company'] = '';
-    }
-    if (!$data['position']) {
-        $data['position'] = '';
-    }
-    if (!$data['about']) {
-        $data['about'] = '';
-    }
-    if (!basename($_FILES['photo']['name'])) {
-        $uploadFile = '';
-    }
-    PDOAdapter::update($searchedId, $data['company'], $data['position'], $data['about'], $uploadFile);
-}
+//$searchedId = PDOAdapter::searchMember($data['email'])[0]['memberId'];
+//
+//if ($searchedId) {
+//    if (!$data['company']) {
+//        $data['company'] = '';
+//    }
+//    if (!$data['position']) {
+//        $data['position'] = '';
+//    }
+//    if (!$data['about']) {
+//        $data['about'] = '';
+//    }
+//    if (!basename($_FILES['photo']['name'])) {
+//        $uploadFile = '';
+//    }
+//    PDOAdapter::update($searchedId, $data['company'], $data['position'], $data['about'], $uploadFile);
+//}
 

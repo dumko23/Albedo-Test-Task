@@ -13,4 +13,13 @@ class Controller extends Model
             return $result;
         }
     }
+
+    public function updateAdditionalInfo($data, $uploadFile, $basename){
+        $result = $this->updateMemberRecord($data, $uploadFile, $basename);
+        if($result === true){
+            return true;
+        } else{
+            return $result;
+        }
+    }
 }

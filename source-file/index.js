@@ -28,14 +28,16 @@ async function nextPrev(n, result) {
 
     if (currentTab === 0) {
         let resultOfAjax = result;
-        console.log(resultOfAjax);
+        console.log(4, resultOfAjax);
         if(typeof resultOfAjax === 'object'){
-            if (n === 1 && !validateForm()) {
-                    return false
-                }
+            console.log(5, resultOfAjax)
+            toggleErrors(resultOfAjax);
+
+            return false;
         } else if(resultOfAjax === 1){
             console.log('shit')
             x[currentTab].style.display = "none";
+            toggleErrors(resultOfAjax);
         }
     } else if (currentTab === 1) {
         let file_data = document.getElementById("imgLoad").files[0];
@@ -59,29 +61,29 @@ async function nextPrev(n, result) {
     showTab(currentTab);
 }
 
-function validateForm() {
-
-    let x, y, i, valid = true;
-    x = document.getElementsByClassName("tab");
-    y = x[currentTab].getElementsByClassName("isValid");
-
-
-    for (i = 0; i < y.length; i++) {
-
-        if (y[i].value === "") {
-            y[i].className += " invalid";
-            valid = false;
-        }
-    }
-
-    if (valid) {
-        document.getElementsByClassName("step")[currentTab].className += " finish";
-    }
-    if (currentTab === 2) {
-        document.getElementsByClassName("step").style.display = 'none';
-    }
-    return valid;
-}
+// function validateForm() {
+//
+//     let x, y, i, valid = true;
+//     x = document.getElementsByClassName("tab");
+//     y = x[currentTab].getElementsByClassName("isValid");
+//
+//
+//     for (i = 0; i < y.length; i++) {
+//
+//         if (y[i].value === "") {
+//             y[i].className += " invalid";
+//             valid = false;
+//         }
+//     }
+//
+//     if (valid) {
+//         document.getElementsByClassName("step")[currentTab].className += " finish";
+//     }
+//     if (currentTab === 2) {
+//         document.getElementsByClassName("step").style.display = 'none';
+//     }
+//     return valid;
+// }
 
 function fixStepIndicator(n) {
 

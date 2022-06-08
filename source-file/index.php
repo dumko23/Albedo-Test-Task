@@ -15,44 +15,44 @@ include('view/layouts/header.php')
 
     <div class="tab">
         <p><label>First name:
-                <input class="isValid" name="data[firstName]" placeholder="First name..."
+                <input id="firstNameIsValid" name="data[firstName]" placeholder="First name..."
                        oninput="this.className = onInput(this.className)" required>
             </label>
             <span class="error" id="firstNameError"></span>
         </p>
         <p><label>Last name:
-                <input class="isValid" name="data[lastName]" placeholder="Last name..."
+                <input id="lastNameIsValid" name="data[lastName]" placeholder="Last name..."
                        oninput="this.className = onInput(this.className)" required>
             </label>
             <span class="error" id="lastNameError"></span>
         </p>
         <p><label>Birth date:
-                <input class="isValid" name="data[date]" placeholder="Birthdate..."
+                <input id="dateIsValid" name="data[date]" placeholder="Birthdate..."
                        oninput="this.className = onInput(this.className)" type="date" required>
             </label>
             <span class="error" id="dateError"></span>
         </p>
         <p><label>Report subject:
-                <input class="isValid" name="data[subject]" placeholder="Repost subject..."
+                <input id="subjectIsValid" name="data[subject]" placeholder="Repost subject..."
                        oninput="this.className = onInput(this.className)" required>
             </label>
             <span class="error" id="subjectError"></span>
         </p>
         <p><label>Country:
-                <select class="country isValid" name="data[country]" required>
+                <select class="country" id="countryIsValid" name="data[country]" required>
                     <option>Choose Country</option>
                 </select>
             </label>
             <span class="error" id="countryError"></span>
         </p>
         <p><label>Phone:
-                <input class="isValid" name="data[phone]" placeholder="+1 (555) 555-5555" maxlength="17"
+                <input id="phoneIsValid" name="data[phone]" placeholder="+1 (555) 555-5555" maxlength="17"
                        oninput="this.className = onInput(this.className)" required type="tel">
             </label>
             <span class="error" id="phoneError"></span>
         </p>
         <p><label>Email:
-                <input class="isValid" name="data[email]" placeholder="E-mail..."
+                <input id="emailIsValid" name="data[email]" placeholder="E-mail..."
                        oninput="this.className = onInput(this.className)" required type="email">
             </label>
             <span class="error" id="emailError"></span>
@@ -122,6 +122,16 @@ include('view/layouts/header.php')
         subject: "",
     }
 
+    let idArray = [
+        'firstName',
+        'lastName',
+        'date',
+        'subject',
+        'country',
+        'phone',
+        'email'
+    ]
+
     showTab(currentTab);
 
     function sendData(n) {
@@ -130,7 +140,7 @@ include('view/layouts/header.php')
         let file_data = $('#imgLoad').prop('files')[0];
         formData.append("photo", file_data);
         let result;
-        toggleErrors(noErrors);
+
 
         $.ajax({
             type: "POST",
@@ -140,32 +150,37 @@ include('view/layouts/header.php')
             url: 'handlerSend.php',
             data: formData,
             success: function (data) {
-                if(typeof data === 'string'){
+                if (typeof data === 'string') {
                     result = JSON.parse(data);
-                    console.log(result);
-
-                    toggleErrors(result);
+                    console.log(1, result);
+                    toggleErrors(noErrors);
+                    // toggleErrors(result);
                     nextPrev(n, result);
                     return false;
-                } else if(data === 1){
+                } else if (data === 1) {
                     return true;
                 }
             }
         });
-        if(result === 1){
+        if (result === 1) {
             return true;
         }
         return result;
     }
 
     function toggleErrors(data) {
-        $('#firstNameError').html(data.firstName);
-        $('#lastNameError').html(data.lastName);
-        $('#dateError').html(data.date);
-        $('#subjectError').html(data.subject);
-        $('#countryError').html(data.country);
-        $('#phoneError').html(data.phone);
-        $('#emailError').html(data.email);
+        console.log(2, data)
+        for (let prop in data){
+            if (!!data[prop]) {
+                console.log('shit', prop)
+                $(`#${prop}IsValid`).addClass('invalid');
+                $(`#${prop}Error`).html(data[prop])
+            } else if(data[prop] === ''){
+                console.log(3)
+                $(`#${prop}IsValid`).removeClass('invalid');
+                $(`#${prop}Error`).html(data[prop])
+            }
+        }
     }
 
 
