@@ -21,19 +21,19 @@ function onInput(str) {
     return str.replace(subst, '');
 }
 
-async function nextPrev(n) {
+async function nextPrev(n, result) {
 
     let x = document.getElementsByClassName("tab");
 
 
     if (currentTab === 0) {
-        let result = sendData();
-        console.log(result);
-        if(!result){
+        let resultOfAjax = result;
+        console.log(resultOfAjax);
+        if(typeof resultOfAjax === 'object'){
             if (n === 1 && !validateForm()) {
                     return false
                 }
-        } else if(result === 1){
+        } else if(resultOfAjax === 1){
             console.log('shit')
             x[currentTab].style.display = "none";
         }

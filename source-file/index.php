@@ -85,7 +85,7 @@ include('view/layouts/header.php')
 
     <div style="overflow:auto;">
         <div style="float:right;">
-            <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+            <button type="button" id="nextBtn" onclick="sendData(1)">Next</button>
 
         </div>
     </div>
@@ -124,7 +124,7 @@ include('view/layouts/header.php')
 
     showTab(currentTab);
 
-    function sendData() {
+    function sendData(n) {
         let oldForm = document.forms.form;
         let formData = new FormData(oldForm);
         let file_data = $('#imgLoad').prop('files')[0];
@@ -145,6 +145,7 @@ include('view/layouts/header.php')
                     console.log(result);
 
                     toggleErrors(result);
+                    nextPrev(n, result);
                     return false;
                 } else if(data === 1){
                     return true;
