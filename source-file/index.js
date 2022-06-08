@@ -39,10 +39,16 @@ async function nextPrev(n, result = true) {
         }
     } else if (currentTab === 1) {
         let file_data = document.getElementById("imgLoad").files[0];
+        console.log(file_data);
         if (file_data) {
             if (file_data.size > 3000000000) {
+                console.log('breaking')
                 document.getElementById('fileWarning').innerHTML = `Max file size is 300. Your is ${file_data.size}`
                 return false;
+            } else {
+                console.log('another shit')
+                updateData();
+                x[currentTab].style.display = "none";
             }
         } else {
             updateData();

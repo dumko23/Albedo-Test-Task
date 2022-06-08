@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Exception;
 use PDO;
 
 class PDOAdapter

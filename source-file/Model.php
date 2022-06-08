@@ -70,13 +70,13 @@ class Model extends PDOAdapter
 
     }
 
-    public function newMemberRecord(array $post): bool|string
+    public function newMemberRecord(array $member): bool|string
     {
-        $data = $post;
+        $data = $member;
         $validateResult = $this->validateInput($data);
-
         if (gettype($validateResult) !== "string") {
-            self::insertMemberToDB($data['firstName'],
+            echo $data['firstName'];
+            $this->insertMemberToDB($data['firstName'],
                 $data['lastName'],
                 $data['date'],
                 $data['subject'],
@@ -90,7 +90,8 @@ class Model extends PDOAdapter
     }
 
     public function updateMemberRecord($data, $uploadFile, $basename){
-        $searchedId = $this->searchMember($data['email'])['memberId'];
+        $searchedId = $this->searchMember($data['email']);
+        print_r($searchedId);
         if ($searchedId) {
             if (!$data['company']) {
                 $data['company'] = '';

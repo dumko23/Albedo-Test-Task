@@ -134,21 +134,13 @@ include('view/layouts/header.php')
 
     showTab(currentTab);
 
-    function useMethod(n){
-        if(n === 0){
-            sendData(n)
-        }else {
-            updateData(n)
-        }
-    }
-
     function sendData(n) {
         let oldForm = document.forms.form;
         let formData = new FormData(oldForm);
         let file_data = $('#imgLoad').prop('files')[0];
         formData.append("photo", file_data);
         let result;
-
+        console.log(formData === oldForm)
 
         $.ajax({
             type: "POST",

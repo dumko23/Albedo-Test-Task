@@ -10,6 +10,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $data = $_POST['data'];
 
 $uploadDir = './uploads/';
+print_r($_FILES);
 
 $basename = basename($_FILES['photo']['name']);
 
