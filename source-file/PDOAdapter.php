@@ -11,23 +11,7 @@ class PDOAdapter
     private const HOST = 'mysql';
     private const DB_NAME = 'MemberList';
 
-    private function __construct()
-    {
-    }
-
-    protected function __clone(): void
-    {
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function __wakeup()
-    {
-        throw new Exception("Cannot unserialize a singleton.");
-    }
-
-    public static function db(): PDO
+    protected function connection(): PDO
     {
         if (!isset(self::$db)) {
             self::$db = new PDO('mysql:host=' . self::HOST . ';port:3306dbname:' . self::DB_NAME,
@@ -38,35 +22,30 @@ class PDOAdapter
         return self::$db;
     }
 
-    public static function insertToDB(string $firstName, string $lastName, string $date, string $subject, string $country, string $phone, string $email): void
+    /*protected function insertMemberToDB(string $firstName, string $lastName, string $date, string $subject, string $country, string $phone, string $email): void
     {
-        static::db()->prepare('insert into MemberList.Members 
+        $this->connection()->prepare('insert into MemberList.Members
     (firstName, lastName, date, subject, country, phone, email)
                                 values (?, ?, ?, ?, ?, ?, ?)')->execute([$firstName, $lastName, $date, $subject, $country, serialize($phone), $email]);
     }
 
-    public static function getFromDB(): bool|array
+    protected function getMembersFromDB(): bool|array
     {
         $queryGet = 'select photo, firstName, lastName, email, subject from MemberList.Members;';
-        return static::db()->query($queryGet)->fetchAll();
+        return $this->connection()->query($queryGet)->fetchAll();
     }
 
-    public static function deleteFromDB(): string
-    {
-        return "delete from MemberList.Members";
-    }
-
-    public static function searchMember($email): bool|array
+    protected function searchMember($email): bool|array
     {
          $querySearch = "select  memberId from MemberList.Members where email = '$email';";
-        return static::db()->query($querySearch)->fetchAll();
+        return $this->connection()->query($querySearch)->fetchAll();
     }
 
-    public static function update($memberId, $company, $position, $about, $photo): void
+    protected function update($memberId, $company, $position, $about, $photo): void
     {
-        PDOAdapter::db()->prepare("update MemberList.Members set company = ?, position = ?, about = ?, photo = ?   where memberId = ?")
+        $this->connection()->prepare("update MemberList.Members set company = ?, position = ?, about = ?, photo = ?   where memberId = ?")
             ->execute([$company, $position, $about, $photo, $memberId]);
-    }
+    }*/
 
 
 }

@@ -2,25 +2,13 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="index.css" rel="stylesheet">
-    <script src="index.js" type="application/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Document</title>
-</head>
-<body>
+<?php
+include('view/layouts/header.php')
+?>
 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1651.8741415025238!2d-118.34412348513942!3d34.10158833461871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2bf20e4c82873%3A0x14015754d926dadb!2zNzA2MCBIb2xseXdvb2QgQmx2ZCwgTG9zIEFuZ2VsZXMsIENBIDkwMDI4LCDQodCo0JA!5e0!3m2!1sru!2sua!4v1654499127339!5m2!1sru!2sua"
         width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"></iframe>
-
 <form id="regForm" name="form" enctype="multipart/form-data" onsubmit="return false" method="post">
     <h1>Register:</h1>
 
@@ -29,32 +17,46 @@ require __DIR__ . '/../vendor/autoload.php';
         <p><label>First name:
                 <input class="isValid" name="data[firstName]" placeholder="First name..."
                        oninput="this.className = onInput(this.className)" required>
-            </label></p>
+            </label>
+            <span class="error" id="firstNameError"></span>
+        </p>
         <p><label>Last name:
                 <input class="isValid" name="data[lastName]" placeholder="Last name..."
                        oninput="this.className = onInput(this.className)" required>
-            </label></p>
+            </label>
+            <span class="error" id="lastNameError"></span>
+        </p>
         <p><label>Birth date:
                 <input class="isValid" name="data[date]" placeholder="Birthdate..."
                        oninput="this.className = onInput(this.className)" type="date" required>
-            </label></p>
+            </label>
+            <span class="error" id="dateError"></span>
+        </p>
         <p><label>Report subject:
                 <input class="isValid" name="data[subject]" placeholder="Repost subject..."
                        oninput="this.className = onInput(this.className)" required>
-            </label></p>
+            </label>
+            <span class="error" id="subjectError"></span>
+        </p>
         <p><label>Country:
                 <select class="country isValid" name="data[country]" required>
-                        <option>Choose Country</option>
-                    </select>
-            </label></p>
+                    <option>Choose Country</option>
+                </select>
+            </label>
+            <span class="error" id="countryError"></span>
+        </p>
         <p><label>Phone:
                 <input class="isValid" name="data[phone]" placeholder="+1 (555) 555-5555" maxlength="17"
                        oninput="this.className = onInput(this.className)" required type="tel">
-            </label></p>
+            </label>
+            <span class="error" id="phoneError"></span>
+        </p>
         <p><label>Email:
                 <input class="isValid" name="data[email]" placeholder="E-mail..."
                        oninput="this.className = onInput(this.className)" required type="email">
-            </label></p>
+            </label>
+            <span class="error" id="emailError"></span>
+        </p>
     </div>
 
 
@@ -69,7 +71,7 @@ require __DIR__ . '/../vendor/autoload.php';
         <p><label>About me:
                 <textarea name="data[about]" placeholder="About me..."></textarea>
             </label></p>
-        <input type="hidden" name="MAX_FILE_SIZE" value="3000000000" />
+        <input type="hidden" name="MAX_FILE_SIZE" value="3000000000"/>
         <p><label>My Photo (.png, .jpg, .jpeg):
                 <input id="imgLoad" name="photo" type="file" accept=".png, .jpg, .jpeg">
             </label></p>
@@ -110,6 +112,16 @@ require __DIR__ . '/../vendor/autoload.php';
     console.log(currentTab, sessionStorage.getItem('currentTab'));
     sessionStorage.setItem('currentTab', '0');
 
+    let noErrors = {
+        country: "",
+        date: "",
+        email: "",
+        firstName: "",
+        lastName: "",
+        phone: "",
+        subject: "",
+    }
+
     showTab(currentTab);
 
     function sendData() {
@@ -117,19 +129,44 @@ require __DIR__ . '/../vendor/autoload.php';
         let formData = new FormData(oldForm);
         let file_data = $('#imgLoad').prop('files')[0];
         formData.append("photo", file_data);
+        let result;
+        toggleErrors(noErrors);
 
         $.ajax({
-            type:"POST",
+            type: "POST",
             processData: false,
             contentType: false,
             cache: false,
-            url:'handlerSend.php',
-            data:formData,
-            success:function (data) {
-                console.log(data, 1);
+            url: 'handlerSend.php',
+            data: formData,
+            success: function (data) {
+                if(typeof data === 'string'){
+                    result = JSON.parse(data);
+                    console.log(result);
+
+                    toggleErrors(result);
+                    return false;
+                } else if(data === 1){
+                    return true;
+                }
             }
         });
+        if(result === 1){
+            return true;
+        }
+        return result;
     }
+
+    function toggleErrors(data) {
+        $('#firstNameError').html(data.firstName);
+        $('#lastNameError').html(data.lastName);
+        $('#dateError').html(data.date);
+        $('#subjectError').html(data.subject);
+        $('#countryError').html(data.country);
+        $('#phoneError').html(data.phone);
+        $('#emailError').html(data.email);
+    }
+
 
     function updateData() {
         let oldForm = document.forms.form;
@@ -138,13 +175,13 @@ require __DIR__ . '/../vendor/autoload.php';
         formData.append("photo", file_data);
 
         $.ajax({
-            type:"POST",
+            type: "POST",
             processData: false,
             contentType: false,
             cache: false,
-            url:'handlerUpdate.php',
-            data:formData,
-            success:function (data) {
+            url: 'handlerUpdate.php',
+            data: formData,
+            success: function (data) {
                 console.log(data);
             }
         });

@@ -66,6 +66,7 @@ a{
 .member-table{
     border: 1px solid black;
     margin: 5px auto;
+    width: 70%;
 }
 
 table {
@@ -96,4 +97,8 @@ td {
 img{
     width: 300px;
     height: auto;
+}
+
+.error{
+    color: red;
 }

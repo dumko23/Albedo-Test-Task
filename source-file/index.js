@@ -21,21 +21,29 @@ function onInput(str) {
     return str.replace(subst, '');
 }
 
-function nextPrev(n) {
+async function nextPrev(n) {
 
     let x = document.getElementsByClassName("tab");
 
-    if (n === 1 && !validateForm()) {
-        return false
-    }
+
     if (currentTab === 0) {
-        sendData();
-        x[currentTab].style.display = "none";
+        let result = sendData();
+        console.log(result);
+        if(!result){
+            if (n === 1 && !validateForm()) {
+                    return false
+                }
+        } else if(result === 1){
+            console.log('shit')
+            x[currentTab].style.display = "none";
+        }
     } else if (currentTab === 1) {
         let file_data = document.getElementById("imgLoad").files[0];
-        if (file_data.size > 3000000000){
-            document.getElementById('fileWarning').innerHTML = `Max file size is 300. Your is ${file_data.size}`
-            return false;
+        if (file_data) {
+            if (file_data.size > 3000000000) {
+                document.getElementById('fileWarning').innerHTML = `Max file size is 300. Your is ${file_data.size}`
+                return false;
+            }
         } else {
 
             updateData();
