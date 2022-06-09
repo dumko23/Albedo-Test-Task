@@ -9,7 +9,6 @@ class Model extends PDOAdapter
     {
         $errors = [];
         if ($record['firstName'] === '') {
-            echo $record['firstName'];
             $errors['firstName'] = 'Input is empty!';
         }
         if ($record['lastName'] === '') {
@@ -38,7 +37,7 @@ class Model extends PDOAdapter
                     implode('', array_splice($number, 0, 4))
                 );
             }
-            //"+1 (555) 555-5555"  /\+[0-9] \([0-9]{3}\) [0-9]{3}-[0-9]{4}/i
+            //"+1 (555) 555-5555"  validation
             if (preg_match('/\+\d \(\d{3}\) \d{3}-\d{4}/i', $number)) {
                 $record['phone'] = $record;
             } else {
@@ -47,7 +46,6 @@ class Model extends PDOAdapter
         }
 
         if ($record['email'] === '') {
-            echo $record['email'];
             $errors['email'] = 'Input is empty!';
         } else {
             if (filter_var($record['email'], FILTER_VALIDATE_EMAIL) === false) {
@@ -89,9 +87,9 @@ class Model extends PDOAdapter
         return true;
     }
 
-    public function updateMemberRecord($data, $uploadFile, $basename){
+    public function updateMemberRecord($data, $uploadFile, $basename): bool|array
+    {
         $searchedId = $this->searchMember($data['email']);
-        print_r($searchedId);
         if ($searchedId) {
             if (!$data['company']) {
                 $data['company'] = '';
@@ -105,7 +103,7 @@ class Model extends PDOAdapter
             if (!$basename) {
                 $uploadFile = '';
             }
-            $this->update($searchedId, $data['company'], $data['position'], $data['about'], $uploadFile);
+            $this->update($searchedId[0]['memberId'], $data['company'], $data['position'], $data['about'], $uploadFile);
             return true;
         }
         return $searchedId;

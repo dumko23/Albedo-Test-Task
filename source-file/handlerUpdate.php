@@ -27,21 +27,3 @@ echo '</pre>';
 
 $updater->updateAdditionalInfo($data, $uploadFile, $basename);
 
-//$searchedId = PDOAdapter::searchMember($data['email'])[0]['memberId'];
-//
-//if ($searchedId) {
-//    if (!$data['company']) {
-//        $data['company'] = '';
-//    }
-//    if (!$data['position']) {
-//        $data['position'] = '';
-//    }
-//    if (!$data['about']) {
-//        $data['about'] = '';
-//    }
-//    if (!basename($_FILES['photo']['name'])) {
-//        $uploadFile = '';
-//    }
-//    PDOAdapter::update($searchedId, $data['company'], $data['position'], $data['about'], $uploadFile);
-//}
-

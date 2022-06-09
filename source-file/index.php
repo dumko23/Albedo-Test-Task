@@ -109,7 +109,6 @@ include('view/layouts/header.php')
     } else if (+sessionStorage.getItem('currentTab') === 2) {
         currentTab = 0;
     }
-    console.log(currentTab, sessionStorage.getItem('currentTab'));
     sessionStorage.setItem('currentTab', '0');
 
     let noErrors = {
@@ -137,7 +136,6 @@ include('view/layouts/header.php')
     function sendData(n) {
         let oldForm = document.forms.form;
         let formData = new FormData(oldForm);
-        console.log(formData === oldForm) //false
         let file_data = $('#imgLoad').prop('files')[0];
         formData.append("photo", file_data);
         let result;
@@ -153,9 +151,7 @@ include('view/layouts/header.php')
             success: function (data) {
                 if (typeof data === 'string') {
                     result = JSON.parse(data);
-
                     toggleErrors(noErrors);
-
                     nextPrev(n, result);
                     return false;
                 } else if (data === 1) {

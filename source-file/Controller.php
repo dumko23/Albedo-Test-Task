@@ -14,9 +14,10 @@ class Controller extends Model
         }
     }
 
-    public function updateAdditionalInfo($data, $uploadFile, $basename){
+    public function updateAdditionalInfo($data, $uploadFile, $basename): bool|array
+    {
         $result = $this->updateMemberRecord($data, $uploadFile, $basename);
-        if($result === true){
+        if(gettype($result) === 'object'){
             return true;
         } else{
             return $result;
