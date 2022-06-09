@@ -17,6 +17,8 @@ $uploadFile = $uploadDir . $basename;
 
 $updater = new Controller();
 
+$config = require('config/config.php');
+
 echo '<pre>';
 if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadFile)) {
     echo "Файл корректен и был успешно загружен.\n";
@@ -25,5 +27,5 @@ if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadFile)) {
 }
 echo '</pre>';
 
-$updater->updateAdditionalInfo($data, $uploadFile, $basename);
+$updater->updateAdditionalInfo($config, $data, $uploadFile, $basename);
 

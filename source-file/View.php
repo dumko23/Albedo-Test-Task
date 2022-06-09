@@ -4,9 +4,9 @@ namespace App;
 
 class View extends Model
 {
-    public function showMembers()
+    public function showMembers($config)
     {
-        $result = $this->getMembersFromDB();
+        $result = $this->getMembersFromDB($config);
         foreach ($result as $member) {
             if ($member['photo'] === '') {
                 $member['photo'] = 'default-image.png';

@@ -14,6 +14,7 @@ function showTab(n) {
     }
     if (n === (x.length - 1)) {
         document.getElementById("step2Btn").style.display = "none";
+        document.getElementById("regHeader").style.display = "none";
     }
     fixStepIndicator(n)
 }

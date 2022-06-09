@@ -7,16 +7,13 @@ use PDO;
 class PDOAdapter
 {
     private static PDO $db;
-    private const HOST = 'mysql';
-    private const DB_NAME = 'MemberList';
 
-    protected static function connection(): PDO
+
+    protected static function connection($config): PDO
     {
         if (!isset(self::$db)) {
-            self::$db = new PDO('mysql:host=' . self::HOST . ';port:3306dbname:' . self::DB_NAME,
-                'root', 'password', [
-                    PDO::ATTR_DEFAULT_FETCH_MODE => 2
-                ]);
+            self::$db = new PDO($config['name'] . 'dbname:' . $config['db'],
+                $config['user'], $config['password'], $config['options']);
         }
         return self::$db;
     }

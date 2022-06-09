@@ -5,7 +5,8 @@ namespace App;
 class Model extends PDOAdapter
 {
 
-    public function validateInput($record): string
+
+    public function validateInput($config, $record): string
     {
         $errors = [];
         if ($record['firstName'] === '') {
@@ -51,8 +52,7 @@ class Model extends PDOAdapter
             if (filter_var($record['email'], FILTER_VALIDATE_EMAIL) === false) {
                 $errors['email'] = 'Incorrect email format!';
             } else {
-                self::connection();
-                if (isset($this->searchMember($record['email'])[0])) {
+                if (isset($this->searchMember($config, $record['email'])[0])) {
                     $errors['email'] = 'This email is already registered!';
                 }
             }
@@ -68,13 +68,12 @@ class Model extends PDOAdapter
 
     }
 
-    public function newMemberRecord(array $member): bool|string
+    public function newMemberRecord($config, array $member): bool|string
     {
         $data = $member;
-        $validateResult = $this->validateInput($data);
+        $validateResult = $this->validateInput($config, $data);
         if ($validateResult === "1") {
-            $error = 'here';
-            $this->insertMemberToDB($data['firstName'],
+            $this->insertMemberToDB($config, $data['firstName'],
                 $data['lastName'],
                 $data['date'],
                 $data['subject'],
@@ -87,9 +86,9 @@ class Model extends PDOAdapter
         return true;
     }
 
-    public function updateMemberRecord($data, $uploadFile, $basename): bool|array
+    public function updateMemberRecord($config, $data, $uploadFile, $basename): bool|array
     {
-        $searchedId = $this->searchMember($data['email']);
+        $searchedId = $this->searchMember($config, $data['email']);
         if ($searchedId) {
             if (!$data['company']) {
                 $data['company'] = '';
@@ -103,34 +102,34 @@ class Model extends PDOAdapter
             if (!$basename) {
                 $uploadFile = '';
             }
-            $this->update($searchedId[0]['memberId'], $data['company'], $data['position'], $data['about'], $uploadFile);
+            $this->update($config, $searchedId[0]['memberId'], $data['company'], $data['position'], $data['about'], $uploadFile);
             return true;
         }
         return $searchedId;
     }
 
-    protected function insertMemberToDB(string $firstName, string $lastName, string $date, string $subject, string $country, string $phone, string $email)
+    protected function insertMemberToDB($config, string $firstName, string $lastName, string $date, string $subject, string $country, string $phone, string $email)
     {
-        $this->connection()->prepare('insert into MemberList.Members 
+        $this->connection($config['database'])->prepare('insert into MemberList.Members 
     (firstName, lastName, date, subject, country, phone, email)
                                 values (?, ?, ?, ?, ?, ?, ?)')->execute([$firstName, $lastName, $date, $subject, $country, serialize($phone), $email]);
     }
 
-    protected function getMembersFromDB(): bool|array
+    protected function getMembersFromDB($config): bool|array
     {
         $queryGet = 'select photo, firstName, lastName, email, subject from MemberList.Members;';
-        return $this->connection()->query($queryGet)->fetchAll();
+        return $this->connection($config['database'])->query($queryGet)->fetchAll();
     }
 
-    protected function searchMember($email): bool|array
+    protected function searchMember($config, $email): bool|array
     {
         $querySearch = "select  memberId from MemberList.Members where email = '$email';";
-        return $this->connection()->query($querySearch)->fetchAll();
+        return $this->connection($config['database'])->query($querySearch)->fetchAll();
     }
 
-    protected function update($memberId, $company, $position, $about, $photo): void
+    protected function update($config, $memberId, $company, $position, $about, $photo): void
     {
-        $this->connection()->prepare("update MemberList.Members set company = ?, position = ?, about = ?, photo = ?   where memberId = ?")
+        $this->connection($this->$config['database'])->prepare("update MemberList.Members set company = ?, position = ?, about = ?, photo = ?   where memberId = ?")
             ->execute([$company, $position, $about, $photo, $memberId]);
     }
 }
