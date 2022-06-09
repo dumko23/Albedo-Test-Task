@@ -137,10 +137,11 @@ include('view/layouts/header.php')
     function sendData(n) {
         let oldForm = document.forms.form;
         let formData = new FormData(oldForm);
+        console.log(formData === oldForm) //false
         let file_data = $('#imgLoad').prop('files')[0];
         formData.append("photo", file_data);
         let result;
-        console.log(formData === oldForm)
+
 
         $.ajax({
             type: "POST",
@@ -152,8 +153,9 @@ include('view/layouts/header.php')
             success: function (data) {
                 if (typeof data === 'string') {
                     result = JSON.parse(data);
+
                     toggleErrors(noErrors);
-                    // toggleErrors(result);
+
                     nextPrev(n, result);
                     return false;
                 } else if (data === 1) {

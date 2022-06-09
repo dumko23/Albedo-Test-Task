@@ -74,8 +74,8 @@ class Model extends PDOAdapter
     {
         $data = $member;
         $validateResult = $this->validateInput($data);
-        if (gettype($validateResult) !== "string") {
-            echo $data['firstName'];
+        if ($validateResult === "1") {
+            $error = 'here';
             $this->insertMemberToDB($data['firstName'],
                 $data['lastName'],
                 $data['date'],
@@ -109,7 +109,6 @@ class Model extends PDOAdapter
             return true;
         }
         return $searchedId;
-
     }
 
     protected function insertMemberToDB(string $firstName, string $lastName, string $date, string $subject, string $country, string $phone, string $email)

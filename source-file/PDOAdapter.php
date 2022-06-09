@@ -10,7 +10,7 @@ class PDOAdapter
     private const HOST = 'mysql';
     private const DB_NAME = 'MemberList';
 
-    protected function connection(): PDO
+    protected static function connection(): PDO
     {
         if (!isset(self::$db)) {
             self::$db = new PDO('mysql:host=' . self::HOST . ';port:3306dbname:' . self::DB_NAME,
