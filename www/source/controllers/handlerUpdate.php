@@ -2,22 +2,19 @@
 
 namespace App;
 
-use Error;
+use App\core\Application;
 
 require __DIR__ . '/../vendor/autoload.php';
-
 
 $data = $_POST['data'];
 
 $uploadDir = './uploads/';
-
 $basename = basename($_FILES['photo']['name']);
-
 $uploadFile = $uploadDir . $basename;
 
-$updater = new Controller();
+$updater = new Application();
 
-$config = require('config/config.php');
+$config = require('source/config.php');
 
 echo '<pre>';
 if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadFile)) {
@@ -27,5 +24,5 @@ if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadFile)) {
 }
 echo '</pre>';
 
-$updater->updateAdditionalInfo($config, $data, $uploadFile, $basename);
+$updater->controller->updateAdditionalInfo($config, $data, $uploadFile, $basename);
 

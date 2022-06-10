@@ -3,5 +3,4 @@
 /vendor
 
 .idea
-/.env
-/www/vendor/
+/vendor/composer/

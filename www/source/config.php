@@ -1,5 +1,6 @@
 <?php
-namespace App;
+
+namespace App\source\controllers;
 
 use PDO;
 
@@ -15,6 +16,11 @@ return [
     ],
     'shareMessage' => [
         'message' => 'Check out this Meetup with SoCal AngularJS!'
+    ],
+    'routes' => [
+        '' => 'source/controllers/main.php',
+        'members' => 'source/controllers/members.php',
+        'send' => 'source/controllers/handlerSend.php',
+        'update' => 'source/controllers/handlerUpdate.php'
     ]
-
 ];
