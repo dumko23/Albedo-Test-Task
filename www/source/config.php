@@ -21,6 +21,7 @@ return [
         '' => 'source/controllers/main.php',
         'members' => 'source/controllers/members.php',
         'send' => 'source/controllers/handlerSend.php',
-        'update' => 'source/controllers/handlerUpdate.php'
+        'update' => 'source/controllers/handlerUpdate.php',
+        'get' => 'source/controllers/getMembersCount.php'
     ]
 ];

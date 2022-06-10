@@ -15,7 +15,7 @@ namespace App\source\view\layout;
     <link href="https://fonts.googleapis.com/css2?family=Gentium+Plus&display=swap" rel="stylesheet">
     <script src="source/view/index.js" type="application/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Document</title>
+    <title>Registration page</title>
 </head>
 <body>
 <?php

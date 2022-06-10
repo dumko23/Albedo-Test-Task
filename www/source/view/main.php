@@ -1,7 +1,8 @@
 <?php
 
+include('source/view/layouts/header.php');
 
-include('source/view/layouts/header.php')
+
 ?>
 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1651.8741415025238!2d-118.34412348513942!3d34.10158833461871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2bf20e4c82873%3A0x14015754d926dadb!2zNzA2MCBIb2xseXdvb2QgQmx2ZCwgTG9zIEFuZ2VsZXMsIENBIDkwMDI4LCDQodCo0JA!5e0!3m2!1sru!2sua!4v1654499127339!5m2!1sru!2sua"
         width="100%" height="450px" style="border:0;" allowfullscreen="" loading="lazy"
@@ -106,7 +107,7 @@ include('source/view/layouts/header.php')
 </form>
 
 <div class="members-link">
-    <a href="members">All members</a>
+    <a href="members">All members (<span id="membersCount"></span>)</a>
 </div>
 
 <script>
@@ -178,7 +179,7 @@ include('source/view/layouts/header.php')
         }
     }
 
-    function updateData(n) {
+    function updateData() {
         let oldForm = document.forms.form;
         let formData = new FormData(oldForm);
         let file_data = $('#imgLoad').prop('files')[0];
@@ -194,6 +195,13 @@ include('source/view/layouts/header.php')
             success: function (data) {
 
             }
+        });
+    }
+
+    function getCount(){
+        console.log(1);
+        $.get( "get", function( data ) {
+            $( "#membersCount" ).html( data );
         });
     }
 

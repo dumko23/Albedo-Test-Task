@@ -4,7 +4,7 @@ namespace App;
 
 use App\core\Application;
 
-require __DIR__ . '/../vendor/autoload.php';
+require  './vendor/autoload.php';
 
 $data = $_POST['data'];
 

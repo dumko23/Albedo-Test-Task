@@ -115,6 +115,12 @@ class Model extends PDOAdapter
                                 values (?, ?, ?, ?, ?, ?, ?)')->execute([$firstName, $lastName, $date, $subject, $country, serialize($phone), $email]);
     }
 
+    public function membersCount($config): int
+    {
+        $members = $this->getMembersFromDB($config);
+        return count($members);
+    }
+
     protected function getMembersFromDB($config): bool|array
     {
         $queryGet = 'select photo, firstName, lastName, email, subject from MemberList.Members;';
