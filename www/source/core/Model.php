@@ -11,19 +11,34 @@ class Model extends PDOAdapter
         $errors = [];
         if ($record['firstName'] === '') {
             $errors['firstName'] = 'Input is empty!';
+        } else if (!preg_match("/^([A-Za-z\"`-]{1,30})$/", $record['firstName'])) {
+            $errors['firstName'] = 'Invalid input!';
+        } else if (strlen($record['firstName']) > 30) {
+            $errors['firstName'] = 'Input field should be maximum 30 symbols long';
         }
+
         if ($record['lastName'] === '') {
             $errors['lastName'] = 'Input is empty!';
+        } else if (!preg_match("/^([A-Za-z\"`-]{1,30})$/", $record['lastName'])) {
+            $errors['lastName'] = 'Invalid input!';
+        }else if (strlen($record['lastName']) > 30) {
+            $errors['lastName'] = 'Input field should be maximum 30 symbols long';
         }
+
         if ($record['date'] === '') {
             $errors['date'] = 'Input is empty!';
         }
+
         if ($record['subject'] === '') {
             $errors['subject'] = 'Input is empty!';
         }
+
         if (!isset($record['country'])) {
             $errors['country'] = 'Input is empty!';
+        }else if (strlen($record['country']) > 255) {
+            $errors['country'] = 'Input field should be maximum 30 symbols long';
         }
+
         if ($record['phone'] === '') {
             $errors['phone'] = 'Input is empty!';
         } else {
@@ -42,12 +57,14 @@ class Model extends PDOAdapter
             if (preg_match('/\+\d \(\d{3}\) \d{3}-\d{4}/i', $number)) {
                 $record['phone'] = $record;
             } else {
-                $errors['phone'] = "Incorrect phone number format! Got: " . $number;
+                $errors['phone'] = "Incorrect phone number format! Should contain 11 digits!";
             }
         }
 
         if ($record['email'] === '') {
             $errors['email'] = 'Input is empty!';
+        } else if (strlen($record['email']) > 255) {
+            $errors['email'] = 'Input field should be maximum 30 symbols long';
         } else {
             if (filter_var($record['email'], FILTER_VALIDATE_EMAIL) === false) {
                 $errors['email'] = 'Incorrect email format!';

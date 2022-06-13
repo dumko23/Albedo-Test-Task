@@ -8,26 +8,26 @@ include('source/view/layouts/header.php');
         width="100%" height="450px" style="border:0;" allowfullscreen="" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"></iframe>
 <form id="regForm" name="form" enctype="multipart/form-data" onsubmit="return false" method="post">
-    <h1 id="regHeader" style="text-align: center">Registration Form</h1>
+    <h1 id="regHeader" style="text-align: center">To participate in the conference, please fill out the form</h1>
     <div class="tab">
         <h3>Step 1</h3>
         <h3>Personal Info:</h3>
         <p><span class="required">*</span> - Required</p>
         <p><label>First name<span class="required">*</span>:
                 <input id="firstNameIsValid" name="data[firstName]" placeholder="First name..."
-                       required>
+                       pattern="^([A-Za-z'`-]{1,30})$" required>
             </label>
             <span class="error" id="firstNameError"></span>
         </p>
         <p><label>Last name<span class="required">*</span>:
                 <input id="lastNameIsValid" name="data[lastName]" placeholder="Last name..."
-                       required>
+                       pattern="^([A-Za-z'`-]{1,30})$" required>
             </label>
             <span class="error" id="lastNameError"></span>
         </p>
         <p><label>Birth date<span class="required">*</span>:
                 <input id="dateIsValid" name="data[date]" placeholder="Birthdate..."
-                       type="date" required>
+                       min="1900-01-01" max="2005-01-01" type="date" required>
             </label>
             <span class="error" id="dateError"></span>
         </p>
@@ -44,9 +44,9 @@ include('source/view/layouts/header.php');
             </label>
             <span class="error" id="countryError"></span>
         </p>
-        <p><label>Phone<span class="required">*</span>:
-                <input id="phoneIsValid" name="data[phone]" placeholder="+1 (555) 555-5555" maxlength="17"
-                       required type="tel">
+        <p><label>Phone number (in the following format: "+1 (555) 555-5555")<span class="required">*</span>:
+                <input id="phoneIsValid" name="data[phone]"  maxlength="11"
+                       data-mask="+0 (000) 000-0000" placeholder="+1 (555) 555-5555" required type="tel">
             </label>
             <span class="error" id="phoneError"></span>
         </p>
@@ -94,8 +94,8 @@ include('source/view/layouts/header.php');
 
     <div style="overflow:auto;">
         <div style="float:right;">
-            <button type="button" id="nextBtn" onclick="sendData(currentTab)">Next</button>
-            <button type="button" id="step2Btn" onclick="nextPrev(currentTab)">Finish</button>
+            <button type="submit" id="nextBtn" onclick="sendData(currentTab)">Next</button>
+            <button type="submit" id="step2Btn" onclick="nextPrev(currentTab)">Finish</button>
         </div>
     </div>
 
@@ -219,6 +219,47 @@ include('source/view/layouts/header.php');
     }).catch(err => {
         console.log(err);
     });
+
+
+    let inputFirstName = document.getElementById('firstNameIsValid');
+    inputFirstName.oninvalid = function(event) {
+        console.log('oh')
+        event.target.setCustomValidity("First Name should only contain latin letters or '`- symbols and maximum 30 symbols long.");
+    }
+    inputFirstName.oninput = function (event) {
+        event.target.setCustomValidity('');
+    }
+
+    let inputLastName = document.getElementById('lastNameIsValid');
+    inputLastName.oninvalid = function(event) {
+        event.target.setCustomValidity("Last Name should only contain latin letters or ' symbol and maximum 30 symbols long.");
+    }
+    inputLastName.oninput = function (event) {
+        event.target.setCustomValidity('');
+    }
+
+    let inputNumber = document.getElementById('phoneIsValid');
+    inputNumber.oninvalid = function(event) {
+        event.target.setCustomValidity("Phone number should contain 11 digits");
+    }
+    inputNumber.oninput = function (event) {
+        event.target.setCustomValidity('');
+    }
+
+    let inputEmail = document.getElementById('emailIsValid');
+    inputEmail.oninvalid = function(event) {
+        event.target.setCustomValidity("Email should only contain latin letters, digits and @ symbol.");
+    }
+    inputEmail.oninput = function (event) {
+        event.target.setCustomValidity('');
+    }
+
+    $(function(){
+
+        $("#phoneIsValid").mask("+0 (000) 000-0000");
+    });
+
+
 </script>
 </body>
 </html>
