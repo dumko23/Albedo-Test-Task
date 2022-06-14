@@ -3,7 +3,7 @@ version: "3"
 services:
   webserver:
     build: 
-      context: ./bin/${PHPVERSION}
+      context: Docker/bin/${PHPVERSION}
     container_name: '${COMPOSE_PROJECT_NAME}-${PHPVERSION}'
     restart: 'always'
     ports:
@@ -13,9 +13,9 @@ services:
       - mysql
     volumes:
       - ${DOCUMENT_ROOT-./www}:/var/www/html
-      - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/php.ini
-      - ${VHOSTS_DIR-./config/vhosts}:/etc/apache2/sites-enabled
-      - ${LOG_DIR-./logs/apache2}:/var/log/apache2
+      - ${PHP_INI-./Docker/config/php/php.ini}:/usr/local/etc/php/php.ini
+      - ${VHOSTS_DIR-./Docker/config/vhosts}:/etc/apache2/sites-enabled
+      - ${LOG_DIR-./Docker/logs/apache2}:/var/log/apache2
     environment:
       APACHE_DOCUMENT_ROOT: ${APACHE_DOCUMENT_ROOT-/var/www/html}
       PMA_PORT: ${HOST_MACHINE_PMA_PORT}
@@ -36,4 +36,4 @@ services:
       MYSQL_DATABASE: MemberList
     volumes:
       - ./mysql:/var/lib/mysql
-      - ${MYSQL_INITDB_DIR-./config/initdb}:/docker-entrypoint-initdb.d
+      - ${MYSQL_INITDB_DIR-./Docker/config/initdb}:/docker-entrypoint-initdb.d
