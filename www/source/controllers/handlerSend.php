@@ -6,9 +6,9 @@ use App\core\Application;
 require './vendor/autoload.php';
 
 $data = $_POST["data"];
-$config = require('source/config.php');
 
-$send = new Application();
-$result = $send->controller->registerNewMember($config, $data);
+$app = new Application();
+$result = $app->controller->registerNewMember($app->getConfig(), $data);
+
 
 echo $result;

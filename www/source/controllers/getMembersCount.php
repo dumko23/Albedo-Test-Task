@@ -1,7 +1,7 @@
 <?php
 
 use App\core\Application;
-$config = require('source/config.php');
-$memberCount = new Application();
-$members = $memberCount->model->membersCount($config);
+
+$app = new Application();
+$members = $app->model->membersCount($app->getConfig());
 echo $members;

@@ -9,4 +9,9 @@ class Request
     {
         return trim($request, '/');
     }
+
+    public function getRequestMethod()
+    {
+        return $_SERVER['REQUEST_METHOD'];
+    }
 }

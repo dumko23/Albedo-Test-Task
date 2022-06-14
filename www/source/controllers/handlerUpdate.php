@@ -12,9 +12,8 @@ $uploadDir = 'uploads/';
 $basename = basename($_FILES['photo']['name']);
 $uploadFile ='source/' . $uploadDir . $basename;
 
-$updater = new Application();
+$app = new Application();
 
-$config = require('source/config.php');
 
 echo '<pre>';
 if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadFile)) {
@@ -24,5 +23,5 @@ if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadFile)) {
 }
 echo '</pre>';
 
-$updater->controller->updateAdditionalInfo($config, $data, $uploadFile, $basename);
+$app->controller->updateAdditionalInfo($app->getConfig(), $data, $uploadFile, $basename);
 

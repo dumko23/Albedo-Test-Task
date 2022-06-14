@@ -24,8 +24,11 @@ namespace App\source\view\layout;
 <body>
 <?php
 
-$config = require ('source/config.php');
-$content = $config['shareMessage']['message'];
+use App\core\Application;
+
+$app = new Application();
+
+$content = $app->getConfig()['shareMessage']['message'];
 $url = urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . explode('?', $_SERVER['REQUEST_URI'], 2)[0]);
 $title = urlencode($content);
 
