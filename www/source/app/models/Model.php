@@ -1,6 +1,8 @@
 <?php
 
-namespace App\core;
+namespace App\app\models;
+
+use App\core\PDOAdapter;
 
 class Model extends PDOAdapter
 {

@@ -1,7 +1,7 @@
 <?php
 $title = "Members List";
 
-include('source/view/layouts/header.php')
+include('source/app/views/view/layouts/header.php')
 ?>
 <a href="/">Back to Register Form</a>
 <div class="memberList">

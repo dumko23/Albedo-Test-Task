@@ -1,7 +1,7 @@
 <?php
 $title = "Not Found..";
 
-require 'source/view/layouts/header.php';
+require 'source/app/views/view/layouts/header.php';
 
 ?>
 

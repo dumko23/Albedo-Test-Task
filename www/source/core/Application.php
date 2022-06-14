@@ -2,6 +2,10 @@
 
 namespace App\core;
 
+use App\app\controllers\Controller;
+use App\app\controllers\HandleController;
+use App\app\models\Model;
+use App\app\views\View;
 use Exception;
 
 class Application

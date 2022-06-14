@@ -1,7 +1,7 @@
 <?php
 $title = "Register Form";
 
-include('source/view/layouts/header.php');
+include('source/app/views/view/layouts/header.php');
 
 
 ?>

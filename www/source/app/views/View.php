@@ -1,6 +1,8 @@
 <?php
 
-namespace App\core;
+namespace App\app\views;
+
+use App\app\models\Model;
 
 class View extends Model
 {
