@@ -81,7 +81,7 @@ include('source/view/layouts/header.php');
 
     <div class="tab">
         <h1 style="text-align: center">Registration complete! Share it with your friends!</h1>
-        <div class="flex">
+        <div class="flex-row">
 
             <?php
             echo $anchors;
