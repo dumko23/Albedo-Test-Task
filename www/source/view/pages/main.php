@@ -1,4 +1,5 @@
 <?php
+$title = "Register Form";
 
 include('source/view/layouts/header.php');
 

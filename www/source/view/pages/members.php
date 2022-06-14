@@ -1,4 +1,5 @@
 <?php
+$title = "Members List";
 
 include('source/view/layouts/header.php')
 ?>

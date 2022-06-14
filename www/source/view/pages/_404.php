@@ -1,4 +1,5 @@
 <?php
+$title = "Not Found..";
 
 require 'source/view/layouts/header.php';
 

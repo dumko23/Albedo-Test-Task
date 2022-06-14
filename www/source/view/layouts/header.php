@@ -20,7 +20,7 @@ namespace App\source\view\layout;
             integrity="sha256-yE5LLp5HSQ/z+hJeCqkz9hdjNkk1jaiGG0tDCraumnA="
             crossorigin="anonymous"
     ></script>
-    <title>Registration page</title>
+    <title><?php echo $title ?></title>
 </head>
 <body>
 <?php
