@@ -18,10 +18,15 @@ return [
         'message' => 'Check out this Meetup with SoCal AngularJS!'
     ],
     'routes' => [
-        '' => 'source/controllers/main.php',
-        'members' => 'source/controllers/members.php',
-        'send' => 'source/controllers/handlerSend.php',
-        'update' => 'source/controllers/handlerUpdate.php',
-        'get' => 'source/controllers/getMembersCount.php'
+        'GET' => [
+            '' => 'source/controllers/main.php',
+            'members' => 'source/controllers/members.php',
+            'get' => 'source/controllers/getMembersCount.php',
+        ],
+        'POST' => [
+            'send' => 'source/controllers/handlerSend.php',
+            'update' => 'source/controllers/handlerUpdate.php'
+        ],
+        '404' => 'source/controllers/_404.php'
     ]
 ];

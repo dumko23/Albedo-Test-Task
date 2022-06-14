@@ -12,11 +12,19 @@ class Router
         $this->routes = $routes;
     }
 
-    public function redirect($uri){
-        if(array_key_exists($uri, $this->routes)){
-            return $this->routes[$uri];
+    public function redirect($uri, $requestMethod){
+        if(array_key_exists($uri, $this->routes[$requestMethod])){
+            return $this->routes[$requestMethod][$uri];
         } else {
-            echo $uri . ' not found..';
+            return $this->routes['404'];
         }
+    }
+
+    public function get(){
+
+    }
+
+    public function post(){
+
     }
 }

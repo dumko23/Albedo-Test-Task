@@ -6,9 +6,10 @@ require __DIR__ . '/vendor/autoload.php';
 
 $app = new Application();
 
-$uri = trim($_SERVER['REQUEST_URI'], '/');
+$uri = $app->request->getUri($_SERVER['REQUEST_URI']);
 
-require $app->router->redirect($uri);
+
+require $app->router->redirect($uri, $_SERVER['REQUEST_METHOD']);
 
 
 
