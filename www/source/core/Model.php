@@ -156,7 +156,7 @@ class Model extends PDOAdapter
 
     protected function update($config, $memberId, $company, $position, $about, $photo): void
     {
-        $this->connection($this->$config['database'])->prepare("update MemberList.Members set company = ?, position = ?, about = ?, photo = ?   where memberId = ?")
+        $this->connection($config['database'])->prepare("update MemberList.Members set company = ?, position = ?, about = ?, photo = ?   where memberId = ?")
             ->execute([$company, $position, $about, $photo, $memberId]);
     }
 }
