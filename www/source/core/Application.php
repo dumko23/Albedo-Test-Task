@@ -11,6 +11,7 @@ class Application
     public Router $router;
     public Model $model;
     public Request $request;
+    public HandleController $handleController;
     protected array $config;
 
     public function __construct()
@@ -20,6 +21,7 @@ class Application
         $this->router = new Router();
         $this->request = new Request();
         $this->controller = new Controller();
+        $this->handleController = new HandleController();
         $this->config = require 'source/config.php';
     }
 
@@ -32,7 +34,9 @@ class Application
             var_dump($controller, $action);
             throw new Exception("{$controller} does not respond to the {$action} action");
         }
-
+        if($action === 'send' || $action === 'update'){
+            return require $this->handleController->$action();
+        }
         $result = $this->$controller->$action();
         return $this->view->showView($result);
     }

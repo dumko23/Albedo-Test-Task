@@ -1,6 +1,6 @@
 <?php
 
-require 'layouts/header.php';
+require 'source/view/layouts/header.php';
 
 ?>
 

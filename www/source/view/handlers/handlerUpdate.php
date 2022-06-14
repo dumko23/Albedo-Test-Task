@@ -12,9 +12,9 @@ echo '<pre>';
 if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadFile)) {
     echo "Файл корректен и был успешно загружен.\n";
 } else {
-    echo 'ошибка';
+    echo 'Ошибка при загрузке файла';
 }
 echo '</pre>';
 
-$app->model->updateAdditionalInfo($app->getConfig(), $data, $uploadFile, $basename);
+$this->model->updateAdditionalInfo($this->getConfig(), $data, $uploadFile, $basename);
 

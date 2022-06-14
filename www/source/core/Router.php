@@ -2,8 +2,6 @@
 
 namespace App\core;
 
-use Exception;
-
 
 class Router
 {
@@ -13,7 +11,8 @@ class Router
         '404' => 'controller@get404'
     ];
 
-    public static function load($file){
+    public static function load($file): static
+    {
         $router = new static;
 
         require $file;
@@ -21,7 +20,7 @@ class Router
         return $router;
     }
 
-    public function redirect($uri, $requestMethod)
+    public function redirect($uri, $requestMethod): array
     {
         if (array_key_exists($uri, $this->routes[$requestMethod])) {
             return explode('@', $this->routes[$requestMethod][$uri]);
