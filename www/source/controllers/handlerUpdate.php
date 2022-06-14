@@ -8,9 +8,10 @@ require  './vendor/autoload.php';
 
 $data = $_POST['data'];
 
-$uploadDir = './uploads/';
+$uploadDir = 'uploads/';
+echo $uploadDir;
 $basename = basename($_FILES['photo']['name']);
-$uploadFile = $uploadDir . $basename;
+$uploadFile ='source/' . $uploadDir . $basename;
 
 $updater = new Application();
 

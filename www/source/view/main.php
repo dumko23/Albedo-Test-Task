@@ -45,13 +45,13 @@ include('source/view/layouts/header.php');
             <span class="error" id="countryError"></span>
         </p>
         <p><label>Phone number (in the following format: "+1 (555) 555-5555")<span class="required">*</span>:
-                <input id="phoneIsValid" name="data[phone]"  maxlength="11"
+                <input id="phoneIsValid" name="data[phone]"  minlength="17"
                        data-mask="+0 (000) 000-0000" placeholder="+1 (555) 555-5555" required type="tel">
             </label>
             <span class="error" id="phoneError"></span>
         </p>
         <p><label>Email<span class="required">*</span>:
-                <input id="emailIsValid" name="data[email]" placeholder="E-mail..."
+                <input id="emailIsValid" name="data[email]" placeholder="your.email@example.com"
                        required type="email">
             </label>
             <span class="error" id="emailError"></span>
@@ -224,7 +224,7 @@ include('source/view/layouts/header.php');
     let inputFirstName = document.getElementById('firstNameIsValid');
     inputFirstName.oninvalid = function(event) {
         console.log('oh')
-        event.target.setCustomValidity("First Name should only contain latin letters or '`- symbols and maximum 30 symbols long.");
+        event.target.setCustomValidity("First Name should contain latin letters or '`- symbols and be maximum 30 symbols long.");
     }
     inputFirstName.oninput = function (event) {
         event.target.setCustomValidity('');
@@ -232,7 +232,7 @@ include('source/view/layouts/header.php');
 
     let inputLastName = document.getElementById('lastNameIsValid');
     inputLastName.oninvalid = function(event) {
-        event.target.setCustomValidity("Last Name should only contain latin letters or ' symbol and maximum 30 symbols long.");
+        event.target.setCustomValidity("Last Name should contain latin letters or ' symbol and be maximum 30 symbols long.");
     }
     inputLastName.oninput = function (event) {
         event.target.setCustomValidity('');

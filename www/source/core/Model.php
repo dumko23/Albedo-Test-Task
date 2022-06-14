@@ -27,16 +27,20 @@ class Model extends PDOAdapter
 
         if ($record['date'] === '') {
             $errors['date'] = 'Input is empty!';
+        }else if (strlen($record['date']) > 255) {
+            $errors['date'] = 'Your input is too long';
         }
 
         if ($record['subject'] === '') {
             $errors['subject'] = 'Input is empty!';
+        } else if (strlen($record['subject']) > 255) {
+            $errors['subject'] = 'Your input is too long';
         }
 
         if (!isset($record['country'])) {
             $errors['country'] = 'Input is empty!';
         }else if (strlen($record['country']) > 255) {
-            $errors['country'] = 'Input field should be maximum 30 symbols long';
+            $errors['country'] = 'Your input is too long';
         }
 
         if ($record['phone'] === '') {
@@ -64,7 +68,7 @@ class Model extends PDOAdapter
         if ($record['email'] === '') {
             $errors['email'] = 'Input is empty!';
         } else if (strlen($record['email']) > 255) {
-            $errors['email'] = 'Input field should be maximum 30 symbols long';
+            $errors['email'] = 'Your input is too long';
         } else {
             if (filter_var($record['email'], FILTER_VALIDATE_EMAIL) === false) {
                 $errors['email'] = 'Incorrect email format!';

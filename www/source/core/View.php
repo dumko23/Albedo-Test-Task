@@ -9,12 +9,12 @@ class View extends Model
         $result = $this->getMembersFromDB($config);
         foreach ($result as $member) {
             if ($member['photo'] === '') {
-                $member['photo'] = '/uploads/default-image.png';
+                $member['photo'] = 'source/uploads/default-image.png';
             }
             echo "<table class='member-table'>
                 <tr>
                     <td class='descr'>Photo</td>
-                    <td><img src='source/{$member['photo']}' alt='user photo'></td>
+                    <td><img src='{$member['photo']}' alt='user photo'></td>
                 </tr>
                 <tr>
                     <td class='descr'>Full Name</td>
