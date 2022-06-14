@@ -4,9 +4,7 @@ namespace App\core;
 
 class Model extends PDOAdapter
 {
-
-
-    public function validateInput($config, $record): string
+    protected function validateInput($config, $record): string
     {
         $errors = [];
         if ($record['firstName'] === '') {
@@ -89,7 +87,7 @@ class Model extends PDOAdapter
 
     }
 
-    public function newMemberRecord($config, array $member): bool|string
+    protected function newMemberRecord($config, array $member): bool|string
     {
         $data = $member;
         $validateResult = $this->validateInput($config, $data);
@@ -158,5 +156,25 @@ class Model extends PDOAdapter
     {
         $this->connection($config['database'])->prepare("update MemberList.Members set company = ?, position = ?, about = ?, photo = ?   where memberId = ?")
             ->execute([$company, $position, $about, $photo, $memberId]);
+    }
+
+    public function registerNewMember($config, $data): bool|string
+    {
+        $result = $this->newMemberRecord($config, $data);
+        if($result === true){
+            return true;
+        } else{
+            return $result;
+        }
+    }
+
+    public function updateAdditionalInfo($config, $data, $uploadFile, $basename): bool|array
+    {
+        $result = $this->updateMemberRecord($config, $data, $uploadFile, $basename);
+        if(gettype($result) === 'object'){
+            return true;
+        } else{
+            return $result;
+        }
     }
 }

@@ -2,12 +2,15 @@
 
 namespace App\core;
 
+use Exception;
+
+
 class Router
 {
     protected array $routes = [
         'POST' => [],
         'GET' => [],
-        '404' => 'source/controllers/_404.php'
+        '404' => 'controller@get404'
     ];
 
     public static function load($file){
@@ -21,9 +24,9 @@ class Router
     public function redirect($uri, $requestMethod)
     {
         if (array_key_exists($uri, $this->routes[$requestMethod])) {
-            return $this->routes[$requestMethod][$uri];
+            return explode('@', $this->routes[$requestMethod][$uri]);
         } else {
-            return $this->routes['404'];
+            return explode('@', $this->routes['404']);
         }
     }
 
@@ -36,4 +39,6 @@ class Router
     {
         $this->routes['POST'][$uri] = $controller;
     }
+
+
 }

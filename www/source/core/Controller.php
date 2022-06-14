@@ -4,23 +4,25 @@ namespace App\core;
 
 class Controller extends Model
 {
-    public function registerNewMember($config, $data): bool|string
+    public function main(): string
     {
-        $result = $this->newMemberRecord($config, $data);
-        if($result === true){
-            return true;
-        } else{
-            return $result;
-        }
+        return  'source/view/main.php';
     }
 
-    public function updateAdditionalInfo($config, $data, $uploadFile, $basename): bool|array
+    public function members(): string
     {
-        $result = $this->updateMemberRecord($config, $data, $uploadFile, $basename);
-        if(gettype($result) === 'object'){
-            return true;
-        } else{
-            return $result;
-        }
+        return  'source/view/members.php';
     }
+
+    public function getMembersCount(): string
+    {
+        return 'source/view/membersCount.php';
+    }
+
+    public function get404(): string
+    {
+        return  'source/view/_404.php';
+    }
+
+
 }

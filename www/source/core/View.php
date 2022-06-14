@@ -32,4 +32,8 @@ class View extends Model
             ";
         }
     }
+
+    public function showView($view){
+        return require $view;
+    }
 }

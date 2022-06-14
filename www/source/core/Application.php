@@ -2,6 +2,8 @@
 
 namespace App\core;
 
+use Exception;
+
 class Application
 {
     public Controller $controller;
@@ -23,5 +25,15 @@ class Application
 
     public function getConfig(){
         return $this->config;
+    }
+
+    public function callAction($controller, $action){
+        if (! method_exists($this->$controller, $action)){
+            var_dump($controller, $action);
+            throw new Exception("{$controller} does not respond to the {$action} action");
+        }
+
+        $result = $this->$controller->$action();
+        return $this->view->showView($result);
     }
 }
